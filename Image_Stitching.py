@@ -9,13 +9,13 @@ warnings.filterwarnings('ignore')
 feature_extraction_algo = 'sift'
 feature_to_match = 'bf'
 
-train_photo = cv2.imread('./'  + 'train.jpg')
+train_photo = cv2.imread('./'  + 's2.jpg')
 
 train_photo = cv2.cvtColor(train_photo,cv2.COLOR_BGR2RGB)
 
 train_photo_gray = cv2.cvtColor(train_photo, cv2.COLOR_RGB2GRAY)
  
-query_photo = cv2.imread('./'  + 'query.jpg')
+query_photo = cv2.imread('./'  + 's1.jpg')
 query_photo = cv2.cvtColor(query_photo,cv2.COLOR_BGR2RGB)
 query_photo_gray = cv2.cvtColor(query_photo, cv2.COLOR_RGB2GRAY)
 
@@ -115,18 +115,7 @@ def key_points_matching(features_train_img, features_query_img, method):
     return rawMatches
 
 def key_points_matching_KNN(features_train_img, features_query_img, ratio, method):
-    """
-    Perform key points matching using K-Nearest Neighbors (KNN) algorithm.
 
-    Args:
-        features_train_img (list): List of features from the training image.
-        features_query_img (list): List of features from the query image.
-        ratio (float): Ratio threshold for Lowe's ratio test.
-        method (string): Method for creating the matching object.
-
-    Returns:
-        list: List of matches between key points in the training and query images.
-    """
     bf = create_matching_object(method, crossCheck=False)
 
     rawMatches = bf.knnMatch(features_train_img, features_query_img, k=2)
@@ -193,11 +182,9 @@ def homography_stitching(keypoints_train_img, keypoints_query_img, matches, repr
     keypoints_query_img = np.float32([keypoint.pt for keypoint in keypoints_query_img])
     
     if len(matches) > 4:
-        # construct the two sets of points
         points_train = np.float32([keypoints_train_img[m.queryIdx] for m in matches])
         points_query = np.float32([keypoints_query_img[m.trainIdx] for m in matches])
         
-        # Calculate the homography between the sets of points
         (H, status) = cv2.findHomography(points_train, points_query, cv2.RANSAC, reprojThresh)
 
         return (matches, H, status)
@@ -213,16 +200,16 @@ if M is None:
 
 print(Homography_Matrix)
 
-
 width = query_photo.shape[1] + train_photo.shape[1]
 print("width ", width) 
-
 
 height = max(query_photo.shape[0], train_photo.shape[0])
 
 result = cv2.warpPerspective(train_photo, Homography_Matrix,  (width, height))
 
-result[0:query_photo.shape[0], 0:query_photo.shape[1]] = query_photo
+mask = (result[0:query_photo.shape[0], 0:query_photo.shape[1]] == 0)
+
+result[0:query_photo.shape[0], 0:query_photo.shape[1]] = mask * query_photo + (1 - mask) * result[0:query_photo.shape[0], 0:query_photo.shape[1]]
 
 plt.figure(figsize=(20,10))
 plt.axis('off')
