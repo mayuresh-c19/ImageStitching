@@ -9,13 +9,13 @@ warnings.filterwarnings('ignore')
 feature_extraction_algo = 'sift'
 feature_to_match = 'bf'
 
-train_photo = cv2.imread('./'  + 's2.jpg')
+train_photo = cv2.imread('./'  + 'train.jpg')
 
 train_photo = cv2.cvtColor(train_photo,cv2.COLOR_BGR2RGB)
 
 train_photo_gray = cv2.cvtColor(train_photo, cv2.COLOR_RGB2GRAY)
  
-query_photo = cv2.imread('./'  + 's1.jpg')
+query_photo = cv2.imread('./'  + 'query.jpg')
 query_photo = cv2.cvtColor(query_photo,cv2.COLOR_BGR2RGB)
 query_photo_gray = cv2.cvtColor(query_photo, cv2.COLOR_RGB2GRAY)
 
@@ -211,10 +211,27 @@ mask = (result[0:query_photo.shape[0], 0:query_photo.shape[1]] == 0)
 
 result[0:query_photo.shape[0], 0:query_photo.shape[1]] = mask * query_photo + (1 - mask) * result[0:query_photo.shape[0], 0:query_photo.shape[1]]
 
+# Convert the image to grayscale
+gray = cv2.cvtColor(result, cv2.COLOR_BGR2GRAY)
+
+# Convert the image to binary
+_, binary = cv2.threshold(gray, 1, 255, cv2.THRESH_BINARY)
+
+# Find the contours in the image
+contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+# Find the bounding rectangle for all the contours
+x, y, w, h = cv2.boundingRect(np.concatenate(contours))
+
+# Crop the image using the bounding rectangle
+result = result[y:y+h, x:x+w]
+
+# Display the cropped image
 plt.figure(figsize=(20,10))
 plt.axis('off')
 plt.imshow(result)
 
-imageio.imwrite("./output/horizontal_panorama_img_"+'.jpeg', result)
+# Save the cropped image
+imageio.imwrite("./output/horizontal_panorama_img_cropped"+'.jpeg', result)
 
 plt.show()
