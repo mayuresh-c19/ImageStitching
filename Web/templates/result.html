@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Stitching Result</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            text-align: center;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        h1 {
+            color: #333333;
+        }
+
+        img {
+            width: 100%;
+            max-width: 700px;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Stitching Result</h1>
+        <!-- Display the result image here -->
+        <img src="../static/output/horizontal_panorama_img_cropped.jpeg" alt="Stitched Image">
+    </div>
+    <div class="container">
+        <h1>Plottings, Features, and Features Mapping</h1>
+        <!-- Display the plottings, features, and features mapping images here -->
+        <div style="display: flex; justify-content: space-around;">
+            <div>
+                <h2>Plottings</h2>
+                <img src="../static/output/plottings.jpeg" alt="Plottings Image">
+            </div>
+            <div>
+                <h2>Features</h2>
+                <img src="../static/output/sift_features_img_.jpeg" alt="Features Image">
+            </div>
+            <div>
+                <h2>Features Mapping</h2>
+                <img src="../static/output/knn_matching_img_.jpeg" alt="Features Mapping Image">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
