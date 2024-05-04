@@ -64,6 +64,7 @@ def upload():
             keypoints_train_img, features_train_img = select_descriptor_methods(train_photo_gray, method=feature_extraction_algo)
             keypoints_query_img, features_query_img = select_descriptor_methods(query_photo_gray, method=feature_extraction_algo)
 
+
             # Feature matching
             if feature_to_match == 'bf':
                 matches = key_points_matching(features_train_img, features_query_img, method=feature_extraction_algo)
@@ -76,6 +77,8 @@ def upload():
 
             # Warp images and blend
             warped_image = warp_and_blend(train_photo, query_photo, Homography_Matrix)
+
+            
 
         # Save the result
         result_path = "./static/output/horizontal_panorama_img_cropped.jpeg"
