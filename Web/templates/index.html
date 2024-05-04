@@ -67,6 +67,14 @@
         <input type="file" name="query_image" accept=".jpg, .jpeg, .png" required>
         <label for="train_image">Upload Right Image:</label>
         <input type="file" name="train_image" accept=".jpg, .jpeg, .png" required>
+        <select name="feature_extraction_algo">
+            <option value="sift">SIFT</option>
+            <option value="surf">SURF</option>
+            <option value="brisk">BRISK</option>
+            <option value="orb">ORB</option>
+            <option value="akaze">AKAZE</option>
+            <option value="lucas-kanade">LUCAS_KANADE</option>
+        </select>
         <button type="submit">Stitch Images</button>
     </form>
 </body>
