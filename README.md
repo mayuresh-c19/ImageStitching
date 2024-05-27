@@ -18,7 +18,7 @@ Project Area : Image Processing, Generative AI, Deep Learning
 Execute these commands in the project directory terminal.
 
 ```bash
-  source venv/bin/activate
-  python3 Image_Stitching.py 
+  cd Web
+  python3 app.py 
 ```
     
