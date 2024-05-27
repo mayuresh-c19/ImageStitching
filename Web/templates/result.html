@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById('stitchedImg').style.display = 'block';
+                document.getElementById('loadingBar').style.display = 'none';
+            }, 3000); // Delay of 3 seconds
+        };
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Stitching Result</title>
@@ -36,34 +44,41 @@
             max-width: 1200px;
             height: auto;
             border-radius: 8px;
-            margin-top: 20px;
+            margin: 20px auto;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: block;
+        }
+
+        .loading-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #f3f3f3;
+            border-radius: 10px;
+            margin: 20px auto;
+        }
+
+        .bar {
+            height: 100%;
+            background-color: #3498db;
+            width: 0%;
+            border-radius: 10px;
+            animation: loading 3s linear forwards;
+        }
+
+        @keyframes loading {
+            to {width: 100%;}
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Image Stitching Result</h1>
-        <!-- Display the result image here -->
-        <img src="../static/output/horizontal_panorama_img_cropped.jpeg" alt="Stitched Image">
-    </div>
-    <div class="container">
-        <h1>Plottings, Features, and Features Mapping</h1>
-        <!-- Display the plottings, features, and features mapping images here -->
-        <div style="display: flex; justify-content: space-around;">
-            <div>
-                <h2>Plottings</h2>
-                <img src="../static/output/plottings.jpeg" alt="Plottings Image">
-            </div>
-            <div>
-                <h2>Features</h2>
-                <img src="../static/output/sift_features_img_.jpeg" alt="Features Image">
-            </div>
-            <div>
-                <h2>Features Mapping</h2>
-                <img src="../static/output/knn_matching_img_.jpeg" alt="Features Mapping Image">
-            </div>
+        <!-- Display the loading bar here -->
+        <div id="loadingBar" class="loading-bar">
+            <div class="bar"></div>
         </div>
+        <!-- Display the result image here -->
+        <img id="stitchedImg" style="display: none;" src="./static/output/horizontal_panorama_img_cropped.jpeg" alt="Stitched Image">
     </div>
 </body>
 </html>

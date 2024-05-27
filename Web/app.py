@@ -32,8 +32,8 @@ def upload():
         query_image = request.files['query_image']
 
         # Save the uploaded images to the server
-        train_path = './uploads/train.jpg'
-        query_path = './uploads/query.jpg'
+        train_path = 'Web/uploads/train.jpg'
+        query_path = 'Web/uploads/query.jpg'
         train_image.save(train_path)
         query_image.save(query_path)
 
@@ -81,7 +81,7 @@ def upload():
             
 
         # Save the result
-        result_path = "./static/output/horizontal_panorama_img_cropped.jpeg"
+        result_path = "Web/static/output/horizontal_panorama_img_cropped.jpeg"
         imageio.imwrite(result_path, warped_image)
 
         # Display the result page
@@ -90,7 +90,7 @@ def upload():
     except Exception as e:
         # Handle any errors
         error_message = str(e)
-        return render_template('error.html', error_message=error_message)
+        return error_message
 
 
 
@@ -212,3 +212,4 @@ def warp_and_blend(train_photo, query_photo, Homography_Matrix):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
